@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <script src="http://cdn.bootcss.com/vue/2.0.0-rc.1/vue.min.js"></script>
+  <title>添加新用户</title>
+  <style media="screen">
+    .table>thead>tr>th {
+      vertical-align: bottom;
+      border-bottom: 2px solid #ddd;
+      background-color: #42b983;
+      color:#fff;
+    }
+
+    button {
+      background-color: #009a61;
+      color:#fff;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="app">
+    <form>
+      <legend>
+        create New Person
+      </legend>
+      <div class="container">
+        <div class="form-group">
+          <label for="">名字：</label>
+          <input type="text" class="form-control" v-model="newPerson.name">
+        </div>
+        <div class="form-group">
+          <label for="">年龄：</label>
+          <input type="text" class="form-control" v-model="newPerson.age">
+        </div>
+        <div class="form-group">
+          <label for="">性别：</label>
+          <select v-model="newPerson.sex">
+            <option value="Female" selected="selected">Female</option>
+            <option value="Male">Male</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for=""></label>
+          <button type="button" @click="createPerson">Create</button>
+        </div>
+      </div>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>名字</th>
+          <th>年龄</th>
+          <th>性别</th>
+          <th>删除</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(person,index) in people">
+          <td>{{person.name}}</td>
+          <td>{{person.age}}</td>
+          <td>{{person.sex}}</td>
+          <td :class="'text-center'">
+            <button @click="deletePerson(index)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        newPerson:{
+          name:'',
+          age:0,
+          sex:'Male'
+        },
+        people:[
+          {
+            name:'Jack',
+            age:28,
+            sex:'Male'
+          },
+          {
+            name:'Bill',
+            age:26,
+            sex:'Male'
+          },
+          {
+            name:'Tracy',
+            age:29,
+            sex:'Female'
+          }
+        ]
+      },
+
+      created:function () {
+        var personStr = localStorage.getItem('person-list');
+        if (personStr) {
+          this.people = JSON.parse(personStr);
+        }
+      },
+
+      methods:{
+        createPerson:function () {
+          this.people.push(this.newPerson);
+          localStorage.setItem("person-list",JSON.stringify(this.people));
+          this.newPerson = {
+            name:"",
+            age:0,
+            sex:'Male'
+          }
+        },
+
+        deletePerson:function (index) {
+          this.people.splice(index,1);
+        }
+      }
+    })
+  </script>
+</body>
+</html>

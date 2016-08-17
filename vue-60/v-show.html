@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="http://cdn.bootcss.com/vue/2.0.0-rc.1/vue.min.js"></script>
+  <title>v-show 命令</title>
+</head>
+<body>
+  <div id="app">
+    <h1>hello,Vue,js!</h1>
+    <h1 v-show="yes">yes!</h1>
+    <h1 v-show="no">no!</h1>
+    <h1 v-show="age>=25">Age:{{age}}</h1>
+    <h1 v-show="name.indexOf('jack')>=0">Name:{{name}}</h1>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        yes:true,
+        no:false,
+        age:28,
+        name:'keepfool'
+      }
+    })
+  </script>
+</body>
+</html>
